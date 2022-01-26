@@ -9,11 +9,14 @@
     "dev:serve": "run-p serve",
     "dev": "run-p dev:*",
     "format": "prettier .  --write",
+    "heroku": "run-p heroku:*",
+    "heroku:build": "run-p build",
+    "heroku:serve": "run-p serve",
     "lint": "eslint . --ext .js,.ts --ignore-path .gitignore",
     "lint-fix": "eslint . --ext.js, .ts --ignore-path .gitignore --fix src",
     "prepare": "husky install",
-    "test": "NODE_ENV=test mocha -r ts-node/register src/tests/**/*.spec.ts",
-    "serve": "nodemon -e js -w lib lib/main.js"
+    "serve": "nodemon -e js -w lib lib/main.js",
+    "test": "NODE_ENV=test mocha -r ts-node/register src/tests/**/*.spec.ts"
   },
   "repository": {
     "type": "git",
