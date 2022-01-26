@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  api:
+    container_name: scheduler_api
+    build:
+      context: ./
+      args:
+        ENV: dev
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/app
+    command: npm run dev
+    ports:
+      - "4004"

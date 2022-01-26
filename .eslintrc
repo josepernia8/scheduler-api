@@ -1,0 +1,42 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "mocha": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  // "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "allowImportExportEverywhere": false
+  },
+  "globals": {
+    "defineProps": "readonly",
+    "defineEmits": "readonly",
+    "defineExpose": "readonly",
+    "withDefaults": "readonly"
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    // override/add rules settings here, such as:
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 3 }],
+    "prettier/prettier": "error",
+    "arrow-parens": ["error", "always"],
+    // "comma-dangle": ["error", "never"],
+    "curly": ["error", "all"],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "no-debugger": "error",
+    "no-console": "off",
+    "object-curly-spacing": ["error", "always"],
+    "quotes": ["error", "single"]
+    // "semi": ["error", "never"],
+  },
+  "root": true
+}

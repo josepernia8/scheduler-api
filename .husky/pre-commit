@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+cmd="npm run lint"
+
+# Run hooks in docker container or local node if Docker is not installed/running
+if docker --version > /dev/null; then
+  docker-compose exec -T api $cmd
+else
+  $cmd
+fi
