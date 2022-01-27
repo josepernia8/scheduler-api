@@ -1,35 +1,33 @@
 'use strict'
 
-import Hapi, { Server } from '@hapi/hapi'
+import AmqpManager from '../services/amqp'
+import { CustomServer } from '../types'
 import routes from '../routes'
 
-export let server: Server
+export let server: CustomServer
 
-export const init = async function (): Promise<Server> {
-  server = Hapi.server({
-    host: process.env.HOST || '0.0.0.0',
-    port: process.env.PORT || 4004,
-    routes: {
-      cors: {
-        origin: process.env.CORS_ORIGIN?.split(','),
-        credentials: true,
-        headers: ['Accept', 'Content-Type'],
-        exposedHeaders: ['content-type', 'content-length']
+export const init = async function (): Promise<CustomServer> {
+  server = new CustomServer(
+    {
+      host: process.env.HOST || '0.0.0.0',
+      port: process.env.PORT || 4004,
+      routes: {
+        cors: {
+          origin: process.env.CORS_ORIGIN?.split(','),
+          credentials: true,
+          headers: ['Accept', 'Content-Type'],
+          exposedHeaders: ['content-type', 'content-length']
+        }
       }
-    }
-  })
+    },
+    new AmqpManager(process.env.CLOUDAMQP_URL as string)
+  )
+
+  // Init configuration for amqp
+  server.amqp.init()
 
   // Add routes
   server.route(routes)
-
-  // Set cookie for saving user token
-  server.state('token', {
-    clearInvalid: false,
-    encoding: 'base64json',
-    isSameSite: process.env.NODE_ENV !== 'dev' ? 'Strict' : 'None',
-    strictHeader: true,
-    ttl: 24 * 60 * 60 * 1000
-  })
 
   return server
 }

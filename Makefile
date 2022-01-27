@@ -4,11 +4,27 @@ print-description:
 	@echo "\n\033[1;33m$(text)\033[0m"
 
 exec:
+ifdef s # service name
+	docker-compose exec $(s) $(cmd)
+else
 	docker-compose exec api $(cmd)
+endif
 
 shell:
 	@make --no-print-directory print-description text="Opening a shell into the running container (press 'Ctrl-d' to leave)"
-	@make --no-print-directory exec cmd="sh"
+ifdef s # service name
+	@make --no-print-directory exec s=$(s) cmd="sh"
+else
+	@make --no-print-directory exec s=api cmd="sh"
+endif
+
+queues-info:
+	@make --no-print-directory print-description text="Retrieving queues information"
+ifdef s # service name
+	@make --no-print-directory exec s=rabbit cmd="rabbitmqctl list_queues"
+else
+	@make --no-print-directory exec s=rabbit cmd="rabbitmqctl list_queues"
+endif
 
 run:
 	docker-compose run --rm api $(cmd)
@@ -25,13 +41,13 @@ test:
 	@make --no-print-directory print-description text="Running tests"
 	@make --no-print-directory run cmd="yarn run test $(file)"
 
-yarn-update:
-	@make --no-print-directory print-description text="Updating dependencies"
+yarn:
+	@make --no-print-directory print-description text="Installing dependencies"
 	docker-compose run --rm --no-deps api yarn
 
 logs:
-ifdef tail
-	docker-compose logs --tail $(tail) api | less -R
+ifdef s # service name
+	docker-compose logs -f $(s)
 else
 	docker-compose logs -f api
 endif
@@ -43,10 +59,18 @@ kill:
 	docker-compose down
 
 restart:
+ifdef s # service name
+	docker-compose restart $(s)
+else
 	docker-compose restart
+endif
 
 start:
+ifdef s # service name
+	docker-compose start $(s)
+else
 	docker-compose start
+endif
 
 #############################################################
 # "Help Documentation"
@@ -62,19 +86,22 @@ help:
 	@echo "  |  kill                        - Stop/remove container and network associated with it"
 	@echo "  |  restart                     - Restart container"
 	@echo "  |  start                       - Starts container"
+	@echo "  |                                To select which service start/restart pass param 's=serviceName'"
 	@echo "  |"
 	@echo "  |_ Useful Commands:"
-	@echo "  |  print-description           - Utility command to print formatted description of currently executed make command"
 	@echo "  |  exec                        - Execute an arbitrary command in the running api container. Ex usage: make exec cmd=\"your command\""
-	@echo "  |  shell                       - Starts a shell in the api containerr"
+	@echo "  |  shell                       - Starts a shell in the api container"
+	@echo "  |  logs                        - Show logs from container Ex usage: make logs"
+	@echo "  |                                To select which service for exec/shell/logs pass param 's=serviceName'"
+	@echo "  |_ Node Commands:"
 	@echo "  |  run                         - Run an arbitrary command in a temporary api container. Ex usage: make run cmd=\"your command\""
+	@echo "  |  yarn                        - Install dependencies"
 	@echo "  |  lint                        - Run linter"
 	@echo "  |  lint-fix                    - Run linter and attempt to fix encountered issues"
 	@echo "  |  test                        - Run tests"
 	@echo "  |                                To run tests from a single file: make test file=path/to/test/file.spec.ts"
-	@echo "  |  yarn-update                  - Update dependencies"
-	@echo "  |  logs                        - Show logs from container Ex usage: make logs"
-	@echo "  |                                To see just latest N logs: make logs tail=N"
+	@echo "  |_ AMQP Commands:"
+	@echo "  |  queues-info                - List information about existing queues (name/messages)"
 	@echo "  |________________________________________________________________________________________________________________________________________"
 	@echo " "
 
@@ -82,11 +109,12 @@ help:
 	print-description
 	exec
 	shell
+	queues-info
 	run
 	lint
 	lint-fix
 	test
-	yarn-update
+	yarn
 	logs
 	init
 	kill

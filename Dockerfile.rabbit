@@ -1,0 +1,7 @@
+FROM rabbitmq:3.9.13-alpine
+
+# EXPOSE 4004
+
+RUN rabbitmq-plugins enable rabbitmq_management
+
+CMD ["rabbitmq-server"]

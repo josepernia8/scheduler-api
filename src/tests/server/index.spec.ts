@@ -1,5 +1,6 @@
+import { afterEach, beforeEach, describe, it } from 'mocha'
+
 import { Server } from '@hapi/hapi'
-import { describe, it, beforeEach, afterEach } from 'mocha'
 import { expect } from 'chai'
 import { init } from '../../server'
 

@@ -1,7 +1,7 @@
 import { FirebaseApp } from '@firebase/app'
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
 import firebaseConfig from './firebaseConfig'
+import { getFirestore } from 'firebase/firestore'
+import { initializeApp } from 'firebase/app'
 
 // Get a Firestore instance
 export const app: FirebaseApp = initializeApp(firebaseConfig)

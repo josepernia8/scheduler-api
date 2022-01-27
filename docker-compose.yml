@@ -2,14 +2,31 @@ version: '3.8'
 services:
   api:
     container_name: scheduler_api
-    build:
-      context: ./
-      args:
-        ENV: dev
+    build: .
     env_file:
       - .env
+    environment:
+      - CLOUDAMQP_URL=amqp://admin:admin1234@rabbit
     volumes:
       - .:/usr/app
     command: npm run dev
     ports:
-      - "4004"
+      - "4004:4004"
+    networks:
+      - scheduler_network
+  rabbit:
+    container_name: scheduler_rabbit
+    build:
+      context: .
+      dockerfile: Dockerfile.rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin1234
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - scheduler_network
+networks:
+  scheduler_network:
+    driver: bridge
