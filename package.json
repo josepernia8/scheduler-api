@@ -39,6 +39,7 @@
     "node-cron": "^3.0.0"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^2.0.1",
     "@types/amqplib": "^0.8.2",
     "@types/chai": "^4.2.22",
     "@types/hapi__hapi": "^20.0.9",

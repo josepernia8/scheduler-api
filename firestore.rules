@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if
+          request.time < timestamp.date(2022, 2, 25);
+    }
+    // Allow specific fields only
+    match /orders/{ordersId} {
+      allow create: if (request.resource.data.keys().hasOnly(
+        ['quantity', 'status', 'total']));
+
+      allow update: if (request.resource.data.diff(resource.data).affectedKeys()
+        .hasOnly(['quantity', 'status', 'total']));
+    }
+  }
+}

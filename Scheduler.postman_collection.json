@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "1fd1a550-40fc-4456-98d0-bdac2f6f2d00",
+		"name": "Scheduler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Bringg",
+			"item": [
+				{
+					"name": "Push Orders to Bringg",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/push-orders",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"push-orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders in Bringg",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/orders-pushed",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"orders-pushed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Update Orders",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 9,\n    \"total\": 551,\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/orders/5VdoQkWlaKKIKvaOkzP5",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"orders",
+								"5VdoQkWlaKKIKvaOkzP5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Orders",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 7,\n    \"total\": 111\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/orders",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/orders",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get  specific order",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{domain}}/orders/5VdoQkWlaKKIKvaOkzP5",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"orders",
+										"5VdoQkWlaKKIKvaOkzP5"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/orders/5KJWHUYyZ4Krm5huQROu",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"orders",
+								"5KJWHUYyZ4Krm5huQROu"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

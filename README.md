@@ -6,6 +6,10 @@ This simple API doesn't handle perfectly all kind of errors or is fully organize
 
 - For the endpoints there is some error handling with `Boom` and handling http responses depending if there i a missing param or what not
 - For Firebase only 1 simple database is created and there is some rules set up for not updating/creating non-allowed fields into the db but since this is a development environment it ignores the rules...
+- Firebase emulator is crashing so tests won't work
+
+# Postman
+There is a postmant collection in the codebase for testing endpoints: `Scheduler.postman_collection.json` you can switch between environments (local/heroku)
 
 # Prerequisites
 - Before runnign the project you need to create a `.env` file
@@ -18,6 +22,7 @@ This simple API doesn't handle perfectly all kind of errors or is fully organize
 ## With Docker
 - The project use `make` you can run `make help` for usage
 - Run `make init` to spin up your dev environment. The project will be running by default on: `http://localhost:4004/`.
+- Note: sometimes the api container doesn't get the connection to amqp properly but you can restart the container or use the make command: `make restart s=api`
 
 
 ## Tech Stack
